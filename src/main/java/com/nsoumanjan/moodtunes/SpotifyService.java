@@ -1,9 +1,11 @@
 package com.nsoumanjan.moodtunes;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -49,10 +51,12 @@ public class SpotifyService {
                 default -> "popular hits";
             };
 
+            String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+            
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spotify.com/v1/search?q=" + 
-                    query.replace(" ", "%20") + "&type=track&limit=20"))
+                    encodedQuery + "&type=track&limit=5"))
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
@@ -70,10 +74,12 @@ public class SpotifyService {
         try {
             String token = getAccessToken();
 
+            String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+            
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spotify.com/v1/search?q=" +
-                    query.replace(" ", "%20") + "&type=track&limit=20"))
+                    encodedQuery + "&type=track&limit=5"))
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
