@@ -49,7 +49,7 @@ public class SpotifyService {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spotify.com/v1/search?q=" + 
-                    query.replace(" ", "%20") + "&type=track&limit=10"))
+                    query.replace(" ", "%20") + "&type=track&limit=20"))
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
@@ -63,3 +63,4 @@ public class SpotifyService {
         }
     }
 }
+

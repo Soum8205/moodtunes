@@ -9,9 +9,12 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #0f0f1a;
+      background: url('bg image.png') no-repeat center center fixed;
+      background-size: cover;
       color: white;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -41,25 +44,81 @@
     }
 
     .mood-btn {
-      padding: 14px 28px;
-      border: none;
-      border-radius: 50px;
+      padding: 16px 32px;
+      border: 2px solid transparent;
+      border-radius: 16px;
       font-size: 1.1rem;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      font-weight: bold;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .mood-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .mood-btn:hover::before {
+      left: 100%;
     }
 
     .mood-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     }
 
-    .mood-btn.happy    { background: linear-gradient(135deg, #f9d423, #ff4e50); color: #000; }
-    .mood-btn.sad      { background: linear-gradient(135deg, #2193b0, #6dd5ed); color: #000; }
-    .mood-btn.energetic{ background: linear-gradient(135deg, #f7971e, #ffd200); color: #000; }
-    .mood-btn.calm     { background: linear-gradient(135deg, #56ab2f, #a8e063); color: #000; }
-    .mood-btn.angry    { background: linear-gradient(135deg, #cb2d3e, #ef473a); color: #fff; }
+    .mood-btn:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .mood-btn.happy    { 
+      background: linear-gradient(135deg, rgba(249,212,35,0.3), rgba(255,78,80,0.3)); 
+      border-color: #f9d423;
+      box-shadow: 0 0 20px rgba(249,212,35,0.3);
+    }
+    .mood-btn.happy:hover { box-shadow: 0 15px 40px rgba(249,212,35,0.5); }
+
+    .mood-btn.sad      { 
+      background: linear-gradient(135deg, rgba(33,147,176,0.3), rgba(109,213,237,0.3)); 
+      border-color: #2193b0;
+      box-shadow: 0 0 20px rgba(33,147,176,0.3);
+    }
+    .mood-btn.sad:hover { box-shadow: 0 15px 40px rgba(33,147,176,0.5); }
+
+    .mood-btn.energetic{ 
+      background: linear-gradient(135deg, rgba(247,151,30,0.3), rgba(255,210,0,0.3)); 
+      border-color: #f7971e;
+      box-shadow: 0 0 20px rgba(247,151,30,0.3);
+    }
+    .mood-btn.energetic:hover { box-shadow: 0 15px 40px rgba(247,151,30,0.5); }
+
+    .mood-btn.calm     { 
+      background: linear-gradient(135deg, rgba(86,171,47,0.3), rgba(168,224,99,0.3)); 
+      border-color: #56ab2f;
+      box-shadow: 0 0 20px rgba(86,171,47,0.3);
+    }
+    .mood-btn.calm:hover { box-shadow: 0 15px 40px rgba(86,171,47,0.5); }
+
+    .mood-btn.angry    { 
+      background: linear-gradient(135deg, rgba(203,45,62,0.3), rgba(239,71,58,0.3)); 
+      border-color: #cb2d3e;
+      box-shadow: 0 0 20px rgba(203,45,62,0.3);
+    }
+    .mood-btn.angry:hover { box-shadow: 0 15px 40px rgba(203,45,62,0.5); }
 
     canvas {
       display: block;
