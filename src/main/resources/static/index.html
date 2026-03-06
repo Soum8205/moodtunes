@@ -1,287 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MoodTunes</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MoodTunes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('bg image.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: url('bg image.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-      text-align: center;
-      padding: 40px 20px 20px;
-    }
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
 
-    header h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #1db954, #1ed760, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        header h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #1db954, #1ed760, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    header p {
-      color: #aaa;
-      margin-top: 8px;
-      font-size: 1rem;
-    }
+        header p {
+            color: #aaa;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
 
-    .moods {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding: 30px 20px;
-    }
+        .moods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 30px 20px;
+        }
 
-    .mood-btn {
-      padding: 16px 32px;
-      border: 2px solid transparent;
-      border-radius: 16px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      position: relative;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+        .mood-btn {
+            padding: 16px 32px;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    .mood-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
+        .mood-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
 
-    .mood-btn:hover::before {
-      left: 100%;
-    }
+        .mood-btn:hover::before {
+            left: 100%;
+        }
 
-    .mood-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    }
+        .mood-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
 
-    .mood-btn:active {
-      transform: translateY(-2px) scale(1.02);
-    }
+        .mood-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
 
-    .mood-btn.happy    { 
-      background: linear-gradient(135deg, rgba(249,212,35,0.3), rgba(255,78,80,0.3)); 
-      border-color: #f9d423;
-      box-shadow: 0 0 20px rgba(249,212,35,0.3);
-    }
-    .mood-btn.happy:hover { box-shadow: 0 15px 40px rgba(249,212,35,0.5); }
+        .mood-btn.happy    { 
+            background: linear-gradient(135deg, rgba(249,212,35,0.3), rgba(255,78,80,0.3)); 
+            border-color: #f9d423;
+            box-shadow: 0 0 20px rgba(249,212,35,0.3);
+        }
+        .mood-btn.happy:hover { box-shadow: 0 15px 40px rgba(249,212,35,0.5); }
 
-    .mood-btn.sad      { 
-      background: linear-gradient(135deg, rgba(33,147,176,0.3), rgba(109,213,237,0.3)); 
-      border-color: #2193b0;
-      box-shadow: 0 0 20px rgba(33,147,176,0.3);
-    }
-    .mood-btn.sad:hover { box-shadow: 0 15px 40px rgba(33,147,176,0.5); }
+        .mood-btn.sad      { 
+            background: linear-gradient(135deg, rgba(33,147,176,0.3), rgba(109,213,237,0.3)); 
+            border-color: #2193b0;
+            box-shadow: 0 0 20px rgba(33,147,176,0.3);
+        }
+        .mood-btn.sad:hover { box-shadow: 0 15px 40px rgba(33,147,176,0.5); }
 
-    .mood-btn.energetic{ 
-      background: linear-gradient(135deg, rgba(247,151,30,0.3), rgba(255,210,0,0.3)); 
-      border-color: #f7971e;
-      box-shadow: 0 0 20px rgba(247,151,30,0.3);
-    }
-    .mood-btn.energetic:hover { box-shadow: 0 15px 40px rgba(247,151,30,0.5); }
+        .mood-btn.energetic{ 
+            background: linear-gradient(135deg, rgba(247,151,30,0.3), rgba(255,210,0,0.3)); 
+            border-color: #f7971e;
+            box-shadow: 0 0 20px rgba(247,151,30,0.3);
+        }
+        .mood-btn.energetic:hover { box-shadow: 0 15px 40px rgba(247,151,30,0.5); }
 
-    .mood-btn.calm     { 
-      background: linear-gradient(135deg, rgba(86,171,47,0.3), rgba(168,224,99,0.3)); 
-      border-color: #56ab2f;
-      box-shadow: 0 0 20px rgba(86,171,47,0.3);
-    }
-    .mood-btn.calm:hover { box-shadow: 0 15px 40px rgba(86,171,47,0.5); }
+        .mood-btn.calm     { 
+            background: linear-gradient(135deg, rgba(86,171,47,0.3), rgba(168,224,99,0.3)); 
+            border-color: #56ab2f;
+            box-shadow: 0 0 20px rgba(86,171,47,0.3);
+        }
+        .mood-btn.calm:hover { box-shadow: 0 15px 40px rgba(86,171,47,0.5); }
 
-    .mood-btn.angry    { 
-      background: linear-gradient(135deg, rgba(203,45,62,0.3), rgba(239,71,58,0.3)); 
-      border-color: #cb2d3e;
-      box-shadow: 0 0 20px rgba(203,45,62,0.3);
-    }
-    .mood-btn.angry:hover { box-shadow: 0 15px 40px rgba(203,45,62,0.5); }
+        .mood-btn.angry    { 
+            background: linear-gradient(135deg, rgba(203,45,62,0.3), rgba(239,71,58,0.3)); 
+            border-color: #cb2d3e;
+            box-shadow: 0 0 20px rgba(203,45,62,0.3);
+        }
+        .mood-btn.angry:hover { box-shadow: 0 15px 40px rgba(203,45,62,0.5); }
 
-    canvas {
-      display: block;
-      margin: 0 auto;
-      border-radius: 16px;
-    }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 16px;
+        }
 
-    #status {
-      text-align: center;
-      color: #aaa;
-      margin: 10px;
-      font-size: 0.95rem;
-    }
+        #status {
+            text-align: center;
+            color: #aaa;
+            margin: 10px;
+            font-size: 0.95rem;
+        }
 
-    .songs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 30px 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+        .songs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .song-card {
-      background: #1a1a2e;
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
+        .song-card {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
 
-    .song-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 30px rgba(29,185,84,0.3);
-    }
+        .song-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 30px rgba(29,185,84,0.3);
+        }
 
-    .song-card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
+        .song-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
 
-    .song-card h3 {
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+        .song-card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    .song-card p {
-      font-size: 0.75rem;
-      color: #aaa;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+        .song-card p {
+            font-size: 0.75rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    audio {
-      width: 100%;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-  </style>
+        audio {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>🎵 MoodTunes</h1>
-    <p>Pick a mood and discover your perfect playlist</p>
-  </header>
+    <header>
+        <h1>🎵 MoodTunes</h1>
+        <p>Pick a mood and discover your perfect playlist</p>
+    </header>
 
-  <div class="moods">
-    <button class="mood-btn happy"     onclick="fetchSongs('happy')">Happy</button>
-    <button class="mood-btn sad"       onclick="fetchSongs('sad')">Sad</button>
-    <button class="mood-btn energetic" onclick="fetchSongs('energetic')">Energetic</button>
-    <button class="mood-btn calm"      onclick="fetchSongs('calm')">Calm</button>
-    <button class="mood-btn angry"     onclick="fetchSongs('angry')">Angry</button>
-  </div>
+    <div class="moods">
+        <button class="mood-btn happy"     onclick="fetchSongs('happy')">Happy</button>
+        <button class="mood-btn sad"       onclick="fetchSongs('sad')">Sad</button>
+        <button class="mood-btn energetic" onclick="fetchSongs('energetic')">Energetic</button>
+        <button class="mood-btn calm"      onclick="fetchSongs('calm')">Calm</button>
+        <button class="mood-btn angry"     onclick="fetchSongs('angry')">Angry</button>
+    </div>
+    
+    <div style="text-align:center; padding: 10px 20px 30px;">
+        <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Search by song or artist..." 
+            style="
+                padding: 14px 24px;
+                width: 400px;
+                max-width: 90%;
+                border-radius: 50px;
+                border: 2px solid #1db954;
+                background: #1a1a2e;
+                color: white;
+                font-size: 1rem;
+                outline: none;
+            "
+            onkeydown="if(event.key === 'Enter') searchSongs()"
+        />
+        <button 
+            onclick="searchSongs()"
+            style="
+                padding: 14px 28px;
+                margin-left: 10px;
+                border-radius: 50px;
+                border: none;
+                background: linear-gradient(135deg, #1db954, #1ed760);
+                color: black;
+                font-weight: bold;
+                font-size: 1rem;
+                cursor: pointer;
+            "
+        >Search...</button>
+    </div>
 
-  <canvas id="visualizer" width="800" height="120"></canvas>
-  <p id="status">Choose a mood to get started</p>
+    <canvas id="visualizer" width="800" height="120"></canvas>
+    <p id="status">Choose a mood to get started</p>
 
-  <div class="songs-grid" id="songs-grid"></div>
+    <div class="songs-grid" id="songs-grid"></div>
 
-  <script>
-    const canvas = document.getElementById('visualizer');
-    const ctx = canvas.getContext('2d');
-    let animationId;
-    let moodColor = '#1db954';
+    <script>
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        let moodColor = '#1db954';
 
-    const moodColors = {
-      happy: '#f9d423',
-      sad: '#2193b0',
-      energetic: '#f7971e',
-      calm: '#56ab2f',
-      angry: '#cb2d3e'
-    };
+        const moodColors = {
+            happy: '#f9d423',
+            sad: '#2193b0',
+            energetic: '#f7971e',
+            calm: '#56ab2f',
+            angry: '#cb2d3e'
+        };
 
-    function animateVisualizer(color) {
-      moodColor = color;
-      cancelAnimationFrame(animationId);
-      draw();
-    }
+        function animateVisualizer(color) {
+            moodColor = color;
+            cancelAnimationFrame(animationId);
+            draw();
+        }
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const bars = 60;
-      const barWidth = canvas.width / bars;
-      const time = Date.now() / 300;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const bars = 60;
+            const barWidth = canvas.width / bars;
+            const time = Date.now() / 300;
 
-      for (let i = 0; i < bars; i++) {
-        const height = 30 + Math.sin(i * 0.4 + time) * 25 + Math.sin(i * 0.8 + time * 1.5) * 15;
-        const x = i * barWidth;
-        const y = (canvas.height - height) / 2;
+            for (let i = 0; i < bars; i++) {
+                const height = 30 + Math.sin(i * 0.4 + time) * 25 + Math.sin(i * 0.8 + time * 1.5) * 15;
+                const x = i * barWidth;
+                const y = (canvas.height - height) / 2;
 
-        ctx.fillStyle = moodColor;
-        ctx.globalAlpha = 0.7 + Math.sin(i + time) * 0.3;
-        ctx.beginPath();
-        ctx.roundRect(x + 2, y, barWidth - 4, height, 4);
-        ctx.fill();
-      }
+                ctx.fillStyle = moodColor;
+                ctx.globalAlpha = 0.7 + Math.sin(i + time) * 0.3;
+                ctx.beginPath();
+                ctx.roundRect(x + 2, y, barWidth - 4, height, 4);
+                ctx.fill();
+            }
 
-      animationId = requestAnimationFrame(draw);
-    }
+            animationId = requestAnimationFrame(draw);
+        }
 
-    async function fetchSongs(mood) {
-      document.getElementById('status').textContent = `Loading ${mood} songs...`;
-      document.getElementById('songs-grid').innerHTML = '';
-      animateVisualizer(moodColors[mood]);
+        async function fetchSongs(mood) {
+            document.getElementById('status').textContent = `Loading ${mood} songs...`;
+            document.getElementById('songs-grid').innerHTML = '';
+            animateVisualizer(moodColors[mood]);
 
-      try {
-        const response = await fetch(`/api/songs?mood=${mood}`);
-        const data = await response.json();
-        const tracks = data.tracks.items;
+            try {
+                const response = await fetch(`/api/songs?mood=${mood}`);
+                const data = await response.json();
+                const tracks = data.tracks.items;
 
-        document.getElementById('status').textContent = `Showing ${tracks.length} songs for "${mood}" mood`;
+                document.getElementById('status').textContent = `Showing ${tracks.length} songs for "${mood}" mood`;
 
-        tracks.forEach(track => {
-          const card = document.createElement('div');
-          card.className = 'song-card';
+                tracks.forEach(track => {
+                    const card = document.createElement('div');
+                    card.className = 'song-card';
 
-          const img = track.album.images[0]?.url || '';
-          const preview = track.preview_url || '';
-          const name = track.name;
-          const artist = track.artists.map(a => a.name).join(', ');
+                    const img = track.album.images[0]?.url || '';
+                    const preview = track.preview_url || '';
+                    const name = track.name;
+                    const artist = track.artists.map(a => a.name).join(', ');
 
-          card.innerHTML = `
-            <img src="${img}" alt="${name}" />
-            <h3>${name}</h3>
-            <p>${artist}</p>
-            ${preview ? `<audio controls src="${preview}"></audio>` : '<p style="color:#666;font-size:0.7rem">No preview available</p>'}
-          `;
+                    card.innerHTML = `
+                        <img src="${img}" alt="${name}" />
+                        <h3>${name}</h3>
+                        <p>${artist}</p>
+                        ${preview ? `<audio controls src="${preview}"></audio>` : '<p style="color:#666;font-size:0.7rem">No preview available</p>'}
+                    `;
 
-          document.getElementById('songs-grid').appendChild(card);
-        });
+                    document.getElementById('songs-grid').appendChild(card);
+                });
 
-      } catch (err) {
-        document.getElementById('status').textContent = 'Something went wrong. Try again!';
-      }
-    }
-  </script>
+            } catch (err) {
+                document.getElementById('status').textContent = 'Something went wrong. Try again!';
+            }
+        }
+        
+        async function searchSongs() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) return;
+
+            document.getElementById('status').textContent = `Searching for "${query}"...`;
+            document.getElementById('songs-grid').innerHTML = '';
+            animateVisualizer('#a78bfa');
+
+            try {
+                const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                const tracks = data.tracks.items;
+
+                document.getElementById('status').textContent = `Showing ${tracks.length} results for "${query}"`;
+
+                tracks.forEach(track => {
+                    const card = document.createElement('div');
+                    card.className = 'song-card';
+
+                    const img = track.album.images[0]?.url || '';
+                    const preview = track.preview_url || '';
+                    const name = track.name;
+                    const artist = track.artists.map(a => a.name).join(', ');
+
+                    card.innerHTML = `
+                        <img src="${img}" alt="${name}" />
+                        <h3>${name}</h3>
+                        <p>${artist}</p>
+                        ${preview ? `<audio controls src="${preview}"></audio>` : '<p style="color:#666;font-size:0.7rem">No preview available</p>'}
+                    `;
+
+                    document.getElementById('songs-grid').appendChild(card);
+                });
+
+            } catch (err) {
+                document.getElementById('status').textContent = 'Something went wrong. Try again!';
+            }
+        }
+    </script>
 
 </body>
 </html>
+

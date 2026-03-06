@@ -1,10 +1,13 @@
 package com.nsoumanjan.moodtunes;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import java.net.http.*;
-import java.net.URI;
-import java.util.*;
 
 @Service
 public class SpotifyService {
@@ -58,6 +61,25 @@ public class SpotifyService {
                 HttpResponse.BodyHandlers.ofString());
             return response.body();
 
+        } catch (Exception e) {
+            return "{\"error\": \"" + e.getMessage() + "\"}";
+        }
+    }
+
+    public String searchSongs(String query) {
+        try {
+            String token = getAccessToken();
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.spotify.com/v1/search?q=" +
+                    query.replace(" ", "%20") + "&type=track&limit=20"))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+            HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+            return response.body();
         } catch (Exception e) {
             return "{\"error\": \"" + e.getMessage() + "\"}";
         }
