@@ -257,6 +257,7 @@
         let animationId;
         let moodColor = '#1db954';
         let currentMood = null;
+        let currentQuery = null;
 
         const moodColors = {
             happy: '#f9d423',
@@ -269,6 +270,8 @@
         function reloadSongs() {
             if (currentMood) {
                 fetchSongs(currentMood);
+            } else if (currentQuery) {
+                searchSongs(currentQuery);
             }
         }
 
@@ -301,6 +304,7 @@
 
         async function fetchSongs(mood) {
             currentMood = mood;
+            currentQuery = null;
             document.getElementById('reload-btn').style.display = 'inline-block';
             document.getElementById('status').textContent = `Loading ${mood} songs...`;
             document.getElementById('songs-grid').innerHTML = '';
@@ -354,11 +358,15 @@
             document.getElementById('status').textContent = `Searching for "${query}"...`;
             document.getElementById('songs-grid').innerHTML = '';
             animateVisualizer('#a78bfa');
+            currentQuery = query;
+            currentMood = null;
+            document.getElementById('reload-btn').style.display = 'inline-block';
 
             try {
                 const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
                 const data = await response.json();
                 const tracks = data.tracks.items;
+                console.log(tracks);
 
                 document.getElementById('status').textContent = `Showing ${tracks.length} results for "${query}"`;
 
@@ -371,7 +379,8 @@
                     const name = track.name;
                     const artist = track.artists.map(a => a.name).join(', ');
 
-                    card.innerHTML = card.innerHTML = `
+                    const spotifyUrl = track.external_urls.spotify;
+                    card.innerHTML = `
                         <img src="${img}" alt="${name}" />
                         <h3>${name}</h3>
                         <p>${artist}</p>
@@ -391,6 +400,7 @@
                 });
 
             } catch (err) {
+                console.log(err);
                 document.getElementById('status').textContent = 'Something went wrong. Try again!';
             }
         }
