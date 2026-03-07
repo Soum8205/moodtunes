@@ -188,7 +188,7 @@
 <body>
 
     <header>
-        <h1>🎵 MoodTunes</h1>
+        <h1>MoodTunes</h1>
         <p>Pick a mood and discover your perfect playlist</p>
     </header>
 
@@ -236,6 +236,18 @@
 
     <canvas id="visualizer" width="800" height="120"></canvas>
     <p id="status">Choose a mood to get started</p>
+    <div style="text-align:center; margin-bottom: 10px;">
+        <button id="reload-btn" onclick="reloadSongs()" 
+        style="
+        display: none;
+        padding: 10px 24px;
+        border-radius: 50px;
+        border: 2px solid #1db954;
+        background: transparent;
+        color: #1db954;
+        font-size: 0.9rem;
+        font-weight: bold;
+        cursor: pointer;">Refresh Songs</button></div>
 
     <div class="songs-grid" id="songs-grid"></div>
 
@@ -244,6 +256,7 @@
         const ctx = canvas.getContext('2d');
         let animationId;
         let moodColor = '#1db954';
+        let currentMood = null;
 
         const moodColors = {
             happy: '#f9d423',
@@ -252,6 +265,12 @@
             calm: '#56ab2f',
             angry: '#cb2d3e'
         };
+
+        function reloadSongs() {
+            if (currentMood) {
+                fetchSongs(currentMood);
+            }
+        }
 
         function animateVisualizer(color) {
             moodColor = color;
@@ -281,6 +300,8 @@
         }
 
         async function fetchSongs(mood) {
+            currentMood = mood;
+            document.getElementById('reload-btn').style.display = 'inline-block';
             document.getElementById('status').textContent = `Loading ${mood} songs...`;
             document.getElementById('songs-grid').innerHTML = '';
             animateVisualizer(moodColors[mood]);
