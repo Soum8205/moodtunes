@@ -76,11 +76,12 @@ public class SpotifyService {
             String token = getAccessToken();
 
             String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
-            
+            int offset = (int) (Math.random() * 50);
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.spotify.com/v1/search?q=" +
-                    encodedQuery + "&type=track&limit=5"))
+                .uri(URI.create("https://api.spotify.com/v1/search?q=" + 
+                    encodedQuery + "&type=track&limit=5&offset=" + offset))
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
